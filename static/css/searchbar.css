@@ -1,0 +1,16 @@
+
+.active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid #4dd0e1;
+  box-shadow: 0 1px 0 0 #4dd0e1;
+}
+input {
+    width: 500px;
+    height: 35px;
+}
+.round {
+    width: 500px;
+    border-radius: 15px;
+    padding: 5px 5px 5px 25px;
+    border-bottom: 2px solid #4dd0e1;
+
+}

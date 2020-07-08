@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "images" as baseurl %}
+<hr>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+</head>
+<body>
+<section class="text-gray-700 body-font">
+  <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+    <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+      <h1 class="title-font font-medium text-3xl text-gray-900"><font color="white">Sign up today and enjoy free videos!</font> </h1>
+      <p class="leading-relaxed mt-4"><font color="white">New videos posted every 5-10 minutes from around the globe.</font></p>
+    </div>
+    <div class="lg:w-2/6 md:w-1/2 bg-gray-200 rounded-lg p-5 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+      <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Sign Up</h2>
+        <form action="register" method="post">
+            {% csrf_token %}
+          <div class="form">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"  name="first_name" placeholder="Enter First Name" type="text">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"  name="last_name" placeholder="Enter Last Name" type="text">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"  name="username" placeholder="Enter User Name" type="text">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"  name="email" placeholder="Enter email" type="email">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4"  name="password1" placeholder="Enter Password" type="password">
+      <input class="input bg-white rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2 mb-4" name="password2" placeholder="Re-Enter Password" type="password">
+      <button class=" bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">Submit</button>
+            </div>
+            </form>
+    </div>
+  </div>
+</section>
+    {% for message in messages %}
+      {{message}}
+    {% endfor %}
+</div>
+    <hr>
+</body>
+{% endblock %}

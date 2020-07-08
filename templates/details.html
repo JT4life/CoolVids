@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "video" as baseurl %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+{% for post in post_list %}
+
+<!--<div class="overlay-content" align="center">-->
+<div class="left-float">
+    <h1 class="title-font text-lg font-medium text-white-900 mb-3" align="center">{{ post.title }}</h1>
+      <video src="{% if post.video %}{{ post.video.url }}{% else %}{% static 'images/no_image.png' %} {% endif %}" width="800" height="800" controls type='video/mp4'></video>
+    <br/>
+    <div class="flex-grow">
+          <h2 class="text-white-900 text-lg title-font font-medium mb-3">Author: {{ post.author}} Subscribe</h2>
+          <h2 class="text-white-900 text-lg title-font font-medium mb-3">Description: {{ post.description }}</h2>
+			<h2 class="text-white-900 text-lg title-font font-medium mb-3">Category: {{post.category}}</h2>
+			<h2 class="text-white-900 text-lg title-font font-medium mb-3">Uploaded: {{post.created}}</h2>
+      <h2 class="text-white-900 text-lg mb-1 font-medium title-font">Comment</h2>
+        {% if not post.comments.all %}
+        <p><font color="white">There are no comments yet.</font> </p>
+        {% endif %}
+        {% for comment in post.comments.all %}
+        <article>
+            <strong><font color="white"> {{ comment.name }} at {{comment.date_added}}</font></strong><br/>
+            {{ comment.body }}
+        </article>
+        {% endfor %}
+        <form method="post" action=".">
+            {% csrf_token %}
+
+            {{form.as_table}}
+
+            <input type="submit" value="Add comment">
+        </form>
+<!--      <textarea class="bg-white rounded border border-gray-400 focus:outline-none h-32 focus:border-indigo-500 text-base px-4 py-2 mb-4 resize-none" placeholder="Comment"></textarea>-->
+<!--        <br/>-->
+<!--      <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Post</button>-->
+    </div>
+  </div>
+
+<div class="right-float">
+        <h1 class="title-font text-lg font-medium text-white-900 mb-3" align="center">Related Videos</h1>
+    {% for post1 in allvideos %}
+        {% if post.category == post1.category %}
+            {% if post.title != post1.title %}
+            <h1 class="title-font text-lg font-medium text-white-900 mb-3" align="center">{{post1.title}}</h1>
+    <img src="{% if post1.image_thumbnail %}{{ post1.image_thumbnail.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" >
+    <a href="{% url 'detail' post1.title %}"><font color="#0400fc"><strong>Watch Video</strong></font></a>
+<!--      <video src="{% if post1.video %}{{ post1.video.url }}{% else %}{% static 'images/no_image.png' %} {% endif %}" width="800" height="800" controls type='video/mp4'></video>-->
+    <br/>
+    {% else %}
+    <h1 class="title-font text-lg font-medium text-white-900 mb-3" align="center">{{post.title}}</h1>
+    <img src="{% if post.image_thumbnail %}{{ post.image_thumbnail.url }}{% else %}{% static 'images/no_image.png' %}{% endif %}" >
+    <font class="text-white-900 text-lg title-font font-medium mb-3"><font color="red">Watching now</font></h2>
+
+    {% endif %}
+{% endif %}
+			{% endfor %}
+{% endfor %}
+    </div>
+</body>
+	{% endblock %}
